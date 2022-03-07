@@ -12,8 +12,6 @@
   "license": "ISC",
   "dependencies": {
     "@aws-sdk/client-eventbridge": "^3.53.0",
-    "aws-cron-parser": "^1.1.12",
-    "aws-sdk": "^2.1086.0",
-    "cron-parser": "^4.2.1"
+    "aws-sdk": "^2.1086.0"
   }
 }
