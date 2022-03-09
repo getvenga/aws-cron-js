@@ -13,7 +13,7 @@ const adjustRuleCronHours = async (rules, adjustTimeBy, dryRun = true) => {
   if(typeof adjustTimeBy !== "number") throw new Error("adjustTimeBy must a number");
 
   for (const rule of rules) {
-      if (rule.ScheduleExpression) {
+      if (rule.ScheduleExpression && rule.Name !== "daylight-saving-cron-adjuster") {
         // find out if the expression is of type 'cron' or 'rate'. We only want to process 'cron' expressions
         const [expressionType, exp] = rule.ScheduleExpression.split("(");
         if (expressionType !== "cron") continue; // if its not a cron, skip it
@@ -39,10 +39,25 @@ const adjustRuleCronHours = async (rules, adjustTimeBy, dryRun = true) => {
     }
 }
 
+const fetchAllRules = async () => {
+  const rules = [];
+  let NextToken;
+  let response;
+
+  do {
+    response = await client.send(new ListRulesCommand({ NextToken }));
+    rules.push(...response.Rules);
+
+    NextToken = response.NextToken;
+  } while(!!response.NextToken)
+
+  return rules;
+}
+
 // Do the thing
 try {
-  const response = await client.send(listRulesCommand);
-  await adjustRuleCronHours(response.Rules, 1);
+  const rules = await fetchAllRules();
+  await adjustRuleCronHours(rules, 1);
 
   console.log("\nFinished.")
 } catch (err) {
