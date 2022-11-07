@@ -20,3 +20,8 @@ PLEASE BY AWARE THAT BY DOING THIS YOU WILL BE MODIFYING AWS EVENT BRIDGE RULES
 yarn install
 node main.js
 ````
+
+## AWS
+
+* Lambda: https://us-east-1.console.aws.amazon.com/lambda/home?region=us-east-1#/functions/eventbridge-dst-adjuster?tab=code
+* Event Bridge Rule: https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:log-groups/log-group/$252Faws$252Flambda$252Feventbridge-dst-adjuster
